@@ -318,7 +318,7 @@ export default function LoanCalculator() {
             <img
               src="/gme-logo.png"
               alt="GME Finance"
-              className="h-16 w-auto"
+              className="h-8 w-auto"
             />
           </div>
           <div className="space-y-2 text-center">
