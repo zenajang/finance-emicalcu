@@ -313,11 +313,20 @@ export default function LoanCalculator() {
     <div className="container mx-auto py-8">
       <div className="space-y-6">
         {/* Header */}
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">EMI 대출 계산기</h1>
-          <p className="text-muted-foreground">
-            비자 기간에 맞는 최적의 대출 조건을 찾아보세요
-          </p>
+        <div className="space-y-4">
+          <div className="flex items-center justify-center">
+            <img
+              src="/gme-logo.png"
+              alt="GME Finance"
+              className="h-16 w-auto"
+            />
+          </div>
+          <div className="space-y-2 text-center">
+            <h1 className="text-3xl font-bold tracking-tight">EMI 대출 계산기</h1>
+            <p className="text-muted-foreground">
+              비자 기간에 맞는 최적의 대출 조건을 찾아보세요
+            </p>
+          </div>
         </div>
 
         {/* Main Card */}
