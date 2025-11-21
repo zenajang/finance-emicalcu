@@ -551,12 +551,12 @@ export default function LoanCalculator() {
 
                 <div className="rounded-md border">
                   <div className="overflow-x-auto">
-                    <table className="w-full">
+                    <table className="w-full table-auto">
                       <thead>
                         <tr className="border-b bg-muted/50">
-                          <th className="h-12 px-4 text-left align-middle font-medium">기간</th>
+                          <th className="h-12 px-4 text-left align-middle font-medium whitespace-nowrap">기간</th>
                           {loanAmounts.map(amount => (
-                            <th key={amount} className="h-12 px-4 text-right align-middle font-medium">
+                            <th key={amount} className="h-12 px-4 text-right align-middle font-medium whitespace-nowrap">
                               {formatCurrency(amount)}
                             </th>
                           ))}
@@ -572,7 +572,7 @@ export default function LoanCalculator() {
                                 : 'hover:bg-muted/50'
                             }`}
                           >
-                            <td className="p-4 align-middle font-medium">
+                            <td className="p-4 align-middle font-medium whitespace-nowrap">
                               {row.duration}개월
                             </td>
                             {loanAmounts.map(amount => {
@@ -580,7 +580,7 @@ export default function LoanCalculator() {
                               return (
                                 <td
                                   key={amount}
-                                  className={`p-4 align-middle text-right ${
+                                  className={`p-4 align-middle text-right whitespace-nowrap ${
                                     cell.highlight === 'yellow'
                                       ? 'bg-yellow-100 font-semibold'
                                       : cell.highlight === 'blue'
