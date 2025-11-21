@@ -368,55 +368,39 @@ export default function LoanCalculator() {
 
             <Separator />
 
-            {/* Info Grid */}
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    오늘 날짜
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-lg sm:text-2xl font-bold break-words">{formatDate(new Date())}</div>
-                </CardContent>
-              </Card>
+            {/* Info List */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span className="text-sm">오늘 날짜</span>
+                </div>
+                <div className="font-semibold">{formatDate(new Date())}</div>
+              </div>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    최대 대출 가능 기간
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-lg sm:text-2xl font-bold">{maxDuration}개월</div>
-                </CardContent>
-              </Card>
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  <span className="text-sm">최대 대출 가능 기간</span>
+                </div>
+                <div className="font-semibold">{maxDuration}개월</div>
+              </div>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription className="flex items-center gap-2">
-                    <Percent className="h-4 w-4" />
-                    이자율 (연)
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-lg sm:text-2xl font-bold">20%</div>
-                </CardContent>
-              </Card>
+              <div className="flex items-center justify-between py-3 border-b">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Percent className="h-4 w-4" />
+                  <span className="text-sm">이자율 (연)</span>
+                </div>
+                <div className="font-semibold">20%</div>
+              </div>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardDescription className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    대출 종료일
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-lg sm:text-2xl font-bold break-words">{contractEnd || '-'}</div>
-                </CardContent>
-              </Card>
+              <div className="flex items-center justify-between py-3">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span className="text-sm">대출 종료일</span>
+                </div>
+                <div className="font-semibold">{contractEnd || '-'}</div>
+              </div>
             </div>
 
             {/* Warning Alert */}
