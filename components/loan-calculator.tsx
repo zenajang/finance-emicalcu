@@ -94,7 +94,7 @@ export default function LoanCalculator() {
       updateCalculations()
       generateTableData()
     }
-  }, [visaExpiry, loanDuration])
+  }, [visaExpiry, loanDuration, language])
 
   useEffect(() => {
     if (maxLoanAmount > 0 && loanDuration) {
@@ -104,11 +104,39 @@ export default function LoanCalculator() {
 
   const formatDate = (date: Date): string => {
     const locale = languageLocales[language] || 'en-US'
-    return date.toLocaleDateString(locale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
+    try {
+      // Check if locale is supported by creating a formatter
+      const formatter = new Intl.DateTimeFormat(locale, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+
+      // Get the resolved locale
+      const resolvedLocale = formatter.resolvedOptions().locale
+
+      // If resolved locale is different from requested (except language variants), fallback to English
+      const requestedLang = locale.split('-')[0]
+      const resolvedLang = resolvedLocale.split('-')[0]
+
+      if (requestedLang === resolvedLang) {
+        return formatter.format(date)
+      }
+
+      // Fallback to English
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    } catch (error) {
+      // Fallback to English if locale is not supported
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    }
   }
 
   const formatDateForInput = (date: Date): string => {
@@ -120,7 +148,23 @@ export default function LoanCalculator() {
 
   const formatCurrency = (amount: number): string => {
     const locale = languageLocales[language] || 'en-US'
-    return new Intl.NumberFormat(locale).format(amount)
+    try {
+      const formatter = new Intl.NumberFormat(locale)
+      const resolvedLocale = formatter.resolvedOptions().locale
+
+      const requestedLang = locale.split('-')[0]
+      const resolvedLang = resolvedLocale.split('-')[0]
+
+      if (requestedLang === resolvedLang) {
+        return formatter.format(amount)
+      }
+
+      // Fallback to English
+      return new Intl.NumberFormat('en-US').format(amount)
+    } catch (error) {
+      // Fallback to English if locale is not supported
+      return new Intl.NumberFormat('en-US').format(amount)
+    }
   }
 
   const PMT = (rate: number, nper: number, pv: number): number => {
@@ -518,7 +562,7 @@ export default function LoanCalculator() {
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">{t.loanAmount}</p>
-                  <p className="text-2xl sm:text-3xl font-bold break-all">{formatCurrency(maxLoanAmount)}{t.won}</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-red-600 break-all">{formatCurrency(maxLoanAmount)}{t.won}</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">{t.monthlyPayment}</p>
