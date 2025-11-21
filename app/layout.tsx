@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EMI 대출 계산기",
+  title: "대출 계산기",
   description: "비자 기간에 맞는 최적의 대출 조건을 찾아보세요",
 };
 

@@ -322,7 +322,7 @@ export default function LoanCalculator() {
             />
           </div>
           <div className="space-y-2 text-center px-4">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">EMI 대출 계산기</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">대출 계산기</h1>
             <p className="text-sm sm:text-base text-muted-foreground">
               비자 기간에 맞는 최적의 대출 조건을 찾아보세요
             </p>
