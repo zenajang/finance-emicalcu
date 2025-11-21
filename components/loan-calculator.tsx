@@ -15,8 +15,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
-import { translations, languages, type Language } from "@/lib/i18n/translations"
+import { translations, languages, languageLocales, type Language } from "@/lib/i18n/translations"
 import { format } from "date-fns"
+import { enUS, ko, th, ru, zhCN, vi, id as idLocale, bn, hi, type Locale } from "date-fns/locale"
 import { cn } from "@/lib/utils"
 
 const INTEREST_RATE = 0.2 / 12
@@ -28,6 +29,26 @@ interface PaymentScheduleItem {
   principal: number
   interest: number
   balance: number
+}
+
+const dateFnsLocales: Record<Language, Locale> = {
+  en: enUS,
+  ko: ko,
+  my: enUS, // Myanmar - fallback to English
+  si: enUS, // Sinhala - fallback to English
+  id: idLocale,
+  km: enUS, // Khmer - fallback to English
+  ne: enUS, // Nepali - fallback to English (ne locale not available in date-fns)
+  bn: bn,
+  th: th,
+  uz: enUS, // Uzbek - fallback to English
+  vi: vi,
+  zh: zhCN,
+  hi: hi,
+  mn: enUS, // Mongolian - fallback to English
+  ru: ru,
+  ur: enUS, // Urdu - fallback to English
+  us: enUS  // United States
 }
 
 export default function LoanCalculator() {
@@ -82,7 +103,8 @@ export default function LoanCalculator() {
   }, [maxLoanAmount, loanDuration])
 
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString('ko-KR', {
+    const locale = languageLocales[language] || 'en-US'
+    return date.toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -97,7 +119,8 @@ export default function LoanCalculator() {
   }
 
   const formatCurrency = (amount: number): string => {
-    return new Intl.NumberFormat('ko-KR').format(amount)
+    const locale = languageLocales[language] || 'en-US'
+    return new Intl.NumberFormat(locale).format(amount)
   }
 
   const PMT = (rate: number, nper: number, pv: number): number => {
@@ -383,7 +406,7 @@ export default function LoanCalculator() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {visaExpiryDate ? format(visaExpiryDate, "PPP") : <span>Pick a date</span>}
+                      {visaExpiryDate ? format(visaExpiryDate, "PPP", { locale: dateFnsLocales[language] }) : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">

@@ -667,6 +667,26 @@ export const translations = {
 export type Language = keyof typeof translations
 export type TranslationKey = keyof typeof translations.en
 
+export const languageLocales: Record<Language, string> = {
+  en: 'en-US',
+  ko: 'ko-KR',
+  my: 'my-MM',
+  si: 'si-LK',
+  id: 'id-ID',
+  km: 'km-KH',
+  ne: 'ne-NP',
+  bn: 'bn-BD',
+  th: 'th-TH',
+  uz: 'uz-UZ',
+  vi: 'vi-VN',
+  zh: 'zh-CN',
+  hi: 'hi-IN',
+  mn: 'mn-MN',
+  ru: 'ru-RU',
+  ur: 'ur-PK',
+  us: 'en-US'
+}
+
 export const languages: { code: Language; name: string; nativeName: string }[] = [
   { code: 'en', name: 'English', nativeName: 'English' },
   { code: 'ko', name: 'Korean', nativeName: '한국어' },
