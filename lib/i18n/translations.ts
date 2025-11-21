@@ -37,7 +37,12 @@ export const translations = {
     mediumRisk: "Medium Risk",
     period: "Period",
     won: "",
-  pickDate: "Pick a date"
+  pickDate: "Pick a date",
+    managerName: "Manager Name",
+    managerContact: "Contact Number",
+    shareCalculation: "Share Calculation",
+    linkCopied: "Link copied to clipboard!",
+    managerInfo: "Manager Information"
   },
   ko: {
     title: "대출 계산기",
@@ -77,7 +82,12 @@ export const translations = {
     mediumRisk: "중간 위험",
     period: "기간",
     won: "원",
-  pickDate: "날짜 선택"
+  pickDate: "날짜 선택",
+    managerName: "담당자 이름",
+    managerContact: "연락처",
+    shareCalculation: "계산 공유하기",
+    linkCopied: "링크가 복사되었습니다!",
+    managerInfo: "담당자 정보"
   },
   my: { // Myanmar
     title: "ချေးငွေတွက်စက်",
@@ -117,7 +127,12 @@ export const translations = {
     mediumRisk: "အလယ်အလတ်အန္တရာယ်",
     period: "ကာလ",
     won: "",
-  pickDate: "ရက်စွဲရွေးပါ"
+  pickDate: "ရက်စွဲရွေးပါ",
+    managerName: "မန်နေဂျာအမည်",
+    managerContact: "ဆက်သွယ်ရန်နံပါတ်",
+    shareCalculation: "တွက်ချက်မှုကို မျှဝေပါ",
+    linkCopied: "လင့်ခ်ကို ကူးယူပြီးပါပြီ!",
+    managerInfo: "မန်နေဂျာအချက်အလက်"
   },
   si: { // Sri Lanka (Sinhala)
     title: "ණය ගණකය",
@@ -157,7 +172,12 @@ export const translations = {
     mediumRisk: "මධ්‍ය අවදානම",
     period: "කාලය",
     won: "",
-  pickDate: "දිනයක් තෝරන්න"
+  pickDate: "දිනයක් තෝරන්න",
+    managerName: "කළමනාකරු නම",
+    managerContact: "සම්බන්ධතා අංකය",
+    shareCalculation: "ගණනය කිරීම බෙදාගන්න",
+    linkCopied: "සබැඳිය පසුරු පුවරුවට පිටපත් කරන ලදි!",
+    managerInfo: "කළමනාකරු තොරතුරු"
   },
   id: { // Indonesia
     title: "Kalkulator Pinjaman",
@@ -197,7 +217,12 @@ export const translations = {
     mediumRisk: "Risiko Sedang",
     period: "Periode",
     won: "",
-  pickDate: "Pilih tanggal"
+  pickDate: "Pilih tanggal",
+    managerName: "Nama Manajer",
+    managerContact: "Nomor Kontak",
+    shareCalculation: "Bagikan Perhitungan",
+    linkCopied: "Tautan disalin ke clipboard!",
+    managerInfo: "Informasi Manajer"
   },
   km: { // Cambodia
     title: "ម៉ាស៊ីនគណនាប្រាក់កម្ចី",
@@ -237,7 +262,12 @@ export const translations = {
     mediumRisk: "ហានិភ័យមធ្យម",
     period: "រយៈពេល",
     won: "",
-  pickDate: "ជ្រើសរើសកាលបរិច្ឆេទ"
+  pickDate: "ជ្រើសរើសកាលបរិច្ឆេទ",
+    managerName: "ឈ្មោះអ្នកគ្រប់គ្រង",
+    managerContact: "លេខទំនាក់ទំនង",
+    shareCalculation: "ចែករំលែកការគណនា",
+    linkCopied: "បានចម្លងតំណទៅ clipboard!",
+    managerInfo: "ព័ត៌មានអ្នកគ្រប់គ្រង"
   },
   ne: { // Nepal
     title: "ऋण क्यालकुलेटर",
@@ -277,7 +307,12 @@ export const translations = {
     mediumRisk: "मध्यम जोखिम",
     period: "अवधि",
     won: "",
-  pickDate: "मिति छान्नुहोस्"
+  pickDate: "मिति छान्नुहोस्",
+    managerName: "प्रबन्धक नाम",
+    managerContact: "सम्पर्क नम्बर",
+    shareCalculation: "गणना साझा गर्नुहोस्",
+    linkCopied: "लिङ्क क्लिपबोर्डमा प्रतिलिपि गरियो!",
+    managerInfo: "प्रबन्धक जानकारी"
   },
   bn: { // Bangladesh
     title: "ঋণ ক্যালকুলেটর",
@@ -317,7 +352,12 @@ export const translations = {
     mediumRisk: "মাঝারি ঝুঁকি",
     period: "সময়কাল",
     won: "",
-  pickDate: "তারিখ নির্বাচন করুন"
+  pickDate: "তারিখ নির্বাচন করুন",
+    managerName: "ম্যানেজার নাম",
+    managerContact: "যোগাযোগ নম্বর",
+    shareCalculation: "গণনা শেয়ার করুন",
+    linkCopied: "লিঙ্ক ক্লিপবোর্ডে কপি হয়েছে!",
+    managerInfo: "ম্যানেজার তথ্য"
   },
   th: { // Thailand
     title: "เครื่องคำนวณเงินกู้",
@@ -357,7 +397,12 @@ export const translations = {
     mediumRisk: "ความเสี่ยงปานกลาง",
     period: "ระยะเวลา",
     won: "",
-  pickDate: "เลือกวันที่"
+  pickDate: "เลือกวันที่",
+    managerName: "ชื่อผู้จัดการ",
+    managerContact: "หมายเลขติดต่อ",
+    shareCalculation: "แชร์การคำนวณ",
+    linkCopied: "คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว!",
+    managerInfo: "ข้อมูลผู้จัดการ"
   },
   uz: { // Uzbekistan
     title: "Kredit Kalkulyatori",
@@ -397,7 +442,12 @@ export const translations = {
     mediumRisk: "O'rta Xavf",
     period: "Muddat",
     won: "",
-  pickDate: "Sanani tanlang"
+  pickDate: "Sanani tanlang",
+    managerName: "Menejer ismi",
+    managerContact: "Aloqa raqami",
+    shareCalculation: "Hisob-kitobni ulashing",
+    linkCopied: "Havola klipbordga nusxalandi!",
+    managerInfo: "Menejer ma'lumoti"
   },
   vi: { // Vietnam
     title: "Máy Tính Khoản Vay",
@@ -437,7 +487,12 @@ export const translations = {
     mediumRisk: "Rủi Ro Trung Bình",
     period: "Thời Gian",
     won: "",
-  pickDate: "Chọn ngày"
+  pickDate: "Chọn ngày",
+    managerName: "Tên người quản lý",
+    managerContact: "Số điện thoại",
+    shareCalculation: "Chia sẻ tính toán",
+    linkCopied: "Đã sao chép liên kết!",
+    managerInfo: "Thông tin người quản lý"
   },
   zh: { // China
     title: "贷款计算器",
@@ -477,7 +532,12 @@ export const translations = {
     mediumRisk: "中等风险",
     period: "期限",
     won: "",
-  pickDate: "选择日期"
+  pickDate: "选择日期",
+    managerName: "经理姓名",
+    managerContact: "联系电话",
+    shareCalculation: "分享计算",
+    linkCopied: "链接已复制到剪贴板！",
+    managerInfo: "经理信息"
   },
   hi: { // India
     title: "ऋण कैलकुलेटर",
@@ -517,7 +577,12 @@ export const translations = {
     mediumRisk: "मध्यम जोखिम",
     period: "अवधि",
     won: "",
-  pickDate: "तिथि चुनें"
+  pickDate: "तिथि चुनें",
+    managerName: "प्रबंधक का नाम",
+    managerContact: "संपर्क नंबर",
+    shareCalculation: "गणना साझा करें",
+    linkCopied: "लिंक क्लिपबोर्ड पर कॉपी किया गया!",
+    managerInfo: "प्रबंधक जानकारी"
   },
   mn: { // Mongolia
     title: "Зээлийн Тооцоолуур",
@@ -557,7 +622,12 @@ export const translations = {
     mediumRisk: "Дунд Эрсдэл",
     period: "Хугацаа",
     won: "",
-  pickDate: "Огноо сонгох"
+  pickDate: "Огноо сонгох",
+    managerName: "Менежерийн нэр",
+    managerContact: "Холбоо барих дугаар",
+    shareCalculation: "Тооцооллыг хуваалцах",
+    linkCopied: "Холбоосыг санах ойд хуулсан!",
+    managerInfo: "Менежерийн мэдээлэл"
   },
   ru: { // Russia
     title: "Кредитный Калькулятор",
@@ -597,7 +667,12 @@ export const translations = {
     mediumRisk: "Средний Риск",
     period: "Период",
     won: "",
-  pickDate: "Выберите дату"
+  pickDate: "Выберите дату",
+    managerName: "Имя менеджера",
+    managerContact: "Контактный номер",
+    shareCalculation: "Поделиться расчетом",
+    linkCopied: "Ссылка скопирована в буфер обмена!",
+    managerInfo: "Информация о менеджере"
   },
   ur: { // Pakistan
     title: "قرض کیلکولیٹر",
@@ -637,7 +712,12 @@ export const translations = {
     mediumRisk: "درمیانی خطرہ",
     period: "مدت",
     won: "",
-  pickDate: "تاریخ منتخب کریں"
+  pickDate: "تاریخ منتخب کریں",
+    managerName: "منیجر کا نام",
+    managerContact: "رابطہ نمبر",
+    shareCalculation: "حساب شیئر کریں",
+    linkCopied: "لنک کلپ بورڈ پر کاپی ہو گیا!",
+    managerInfo: "منیجر کی معلومات"
   },
   us: { // United States (English - same as 'en')
     title: "Loan Calculator",
@@ -677,7 +757,12 @@ export const translations = {
     mediumRisk: "Medium Risk",
     period: "Period",
     won: "",
-  pickDate: "Pick a date"
+  pickDate: "Pick a date",
+    managerName: "Manager Name",
+    managerContact: "Contact Number",
+    shareCalculation: "Share Calculation",
+    linkCopied: "Link copied to clipboard!",
+    managerInfo: "Manager Information"
   }
 } as const
 

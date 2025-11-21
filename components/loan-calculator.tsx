@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,7 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle, TrendingUp, Calendar as CalendarIcon, Percent, Clock, ChevronDown, ChevronUp, Globe } from "lucide-react"
+import { AlertCircle, TrendingUp, Calendar as CalendarIcon, Percent, Clock, ChevronDown, ChevronUp, Globe, Share2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -52,12 +53,16 @@ const dateFnsLocales: Record<Language, Locale> = {
 }
 
 export default function LoanCalculator() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [mounted, setMounted] = useState(false)
   const [language, setLanguage] = useState<Language>('en')
   const [visaExpiry, setVisaExpiry] = useState<string>("")
   const [visaExpiryDate, setVisaExpiryDate] = useState<Date>()
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false)
   const [loanDuration, setLoanDuration] = useState<string>("")
+  const [managerName, setManagerName] = useState<string>("")
+  const [managerContact, setManagerContact] = useState<string>("")
   const [maxDuration, setMaxDuration] = useState<number>(0)
   const [contractEnd, setContractEnd] = useState<string>("")
   const [showWarning, setShowWarning] = useState<boolean>(false)
@@ -85,6 +90,37 @@ export default function LoanCalculator() {
 
   useEffect(() => {
     setMounted(true)
+
+    // Read URL parameters and set initial values
+    const visaParam = searchParams.get('visa')
+    const durationParam = searchParams.get('duration')
+    const nameParam = searchParams.get('name')
+    const contactParam = searchParams.get('contact')
+    const langParam = searchParams.get('lang')
+
+    if (langParam && langParam in translations) {
+      setLanguage(langParam as Language)
+    }
+
+    if (visaParam) {
+      setVisaExpiry(visaParam)
+      const date = new Date(visaParam)
+      if (!isNaN(date.getTime())) {
+        setVisaExpiryDate(date)
+      }
+    }
+
+    if (durationParam) {
+      setLoanDuration(durationParam)
+    }
+
+    if (nameParam) {
+      setManagerName(decodeURIComponent(nameParam))
+    }
+
+    if (contactParam) {
+      setManagerContact(decodeURIComponent(contactParam))
+    }
   }, [])
 
   const t = translations[language]
@@ -362,6 +398,42 @@ export default function LoanCalculator() {
     return durations
   }
 
+  const handleShare = async () => {
+    if (!visaExpiry || !loanDuration) {
+      alert(t.selectLoanDuration)
+      return
+    }
+
+    const params = new URLSearchParams()
+    params.set('visa', visaExpiry)
+    params.set('duration', loanDuration)
+    params.set('lang', language)
+
+    if (managerName) {
+      params.set('name', encodeURIComponent(managerName))
+    }
+
+    if (managerContact) {
+      params.set('contact', encodeURIComponent(managerContact))
+    }
+
+    const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`
+
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      alert(t.linkCopied)
+    } catch (error) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea')
+      textArea.value = shareUrl
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      alert(t.linkCopied)
+    }
+  }
+
   if (!mounted) {
     return (
       <div className="container mx-auto py-4 sm:py-8 px-4">
@@ -494,6 +566,35 @@ export default function LoanCalculator() {
 
             <Separator />
 
+            {/* Manager Information */}
+            <div className="space-y-4">
+              <Label className="text-base font-semibold">{t.managerInfo}</Label>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="managerName">{t.managerName}</Label>
+                  <Input
+                    id="managerName"
+                    type="text"
+                    placeholder={t.managerName}
+                    value={managerName}
+                    onChange={(e) => setManagerName(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="managerContact">{t.managerContact}</Label>
+                  <Input
+                    id="managerContact"
+                    type="tel"
+                    placeholder={t.managerContact}
+                    value={managerContact}
+                    onChange={(e) => setManagerContact(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
             {/* Info List */}
             <div className="space-y-3">
               <div className="flex items-center justify-between py-3 border-b">
@@ -559,6 +660,28 @@ export default function LoanCalculator() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Manager Info Display */}
+              {(managerName || managerContact) && (
+                <>
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                    <p className="text-sm font-semibold text-muted-foreground">{t.managerInfo}</p>
+                    {managerName && (
+                      <p className="text-sm">
+                        <span className="font-medium">{t.managerName}:</span> {managerName}
+                      </p>
+                    )}
+                    {managerContact && (
+                      <p className="text-sm">
+                        <span className="font-medium">{t.managerContact}:</span>{' '}
+                        <a href={`tel:${managerContact}`} className="text-primary hover:underline">
+                          {managerContact}
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                  <Separator />
+                </>
+              )}
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">{t.loanAmount}</p>
@@ -591,6 +714,16 @@ export default function LoanCalculator() {
                 </div>
               </div>
               <Separator />
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleShare}
+                  variant="default"
+                  className="flex-1"
+                >
+                  <Share2 className="mr-2 h-4 w-4" />
+                  {t.shareCalculation}
+                </Button>
+              </div>
               <Button
                 onClick={() => setShowSchedule(!showSchedule)}
                 variant="outline"
