@@ -35,6 +35,7 @@ export default function LoanCalculator() {
   const [language, setLanguage] = useState<Language>('en')
   const [visaExpiry, setVisaExpiry] = useState<string>("")
   const [visaExpiryDate, setVisaExpiryDate] = useState<Date>()
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false)
   const [loanDuration, setLoanDuration] = useState<string>("")
   const [maxDuration, setMaxDuration] = useState<number>(0)
   const [contractEnd, setContractEnd] = useState<string>("")
@@ -320,10 +321,10 @@ export default function LoanCalculator() {
   }
 
   return (
-    <div className="container mx-auto py-4 sm:py-8 px-4">
-      <div className="space-y-4 sm:space-y-6">
-        {/* Header */}
-        <div className="space-y-4">
+    <>
+      {/* Header */}
+      <header className="bg-muted/50 border-b sticky top-0 z-50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <img
@@ -331,36 +332,35 @@ export default function LoanCalculator() {
                 alt="GME Finance"
                 className="h-8 w-auto"
               />
-              <div className="space-y-1">
-                <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{t.title}</h1>
-                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
-                  {t.subtitle}
-                </p>
-              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
+                {t.subtitle}
+              </p>
             </div>
-            <div className="flex justify-end">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="gap-2">
-                    <Globe className="h-4 w-4" />
-                    <span className="hidden sm:inline">{languages.find(l => l.code === language)?.nativeName}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="max-h-[400px] overflow-y-auto">
-                  {languages.map((lang) => (
-                    <DropdownMenuItem
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={language === lang.code ? 'bg-accent' : ''}
-                    >
-                      {lang.nativeName}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Globe className="h-4 w-4" />
+                  <span className="hidden sm:inline">{languages.find(l => l.code === language)?.nativeName}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="max-h-[400px] overflow-y-auto">
+                {languages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={language === lang.code ? 'bg-accent' : ''}
+                  >
+                    {lang.nativeName}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
+      </header>
+
+      <div className="container mx-auto py-4 sm:py-8 px-4">
+        <div className="space-y-4 sm:space-y-6">
 
         {/* Main Card */}
         <Card>
@@ -373,7 +373,7 @@ export default function LoanCalculator() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>{t.visaExpiry}</Label>
-                <Popover>
+                <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
@@ -394,6 +394,7 @@ export default function LoanCalculator() {
                         setVisaExpiryDate(date)
                         if (date) {
                           setVisaExpiry(format(date, "yyyy-MM-dd"))
+                          setIsCalendarOpen(false)
                         }
                       }}
                       disabled={(date) => date < new Date()}
@@ -444,15 +445,16 @@ export default function LoanCalculator() {
                 <div className="font-semibold">{maxDuration}{t.months}</div>
               </div>
 
-              <div className="flex items-center justify-between py-3 border-b">
+              {/* Interest Rate - Hidden for now, uncomment to show */}
+              {/* <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Percent className="h-4 w-4" />
                   <span className="text-sm">{t.interestRate}</span>
                 </div>
                 <div className="font-semibold">20%</div>
-              </div>
+              </div> */}
 
-              <div className="flex items-center justify-between py-3">
+              <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <CalendarIcon className="h-4 w-4" />
                   <span className="text-sm">{t.loanEndDate}</span>
@@ -659,7 +661,8 @@ export default function LoanCalculator() {
             )}
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
