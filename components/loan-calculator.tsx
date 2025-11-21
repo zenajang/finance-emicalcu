@@ -399,6 +399,9 @@ export default function LoanCalculator() {
                       }}
                       disabled={(date) => date < new Date()}
                       initialFocus
+                      captionLayout="dropdown-months"
+                      fromYear={new Date().getFullYear()}
+                      toYear={new Date().getFullYear() + 10}
                     />
                   </PopoverContent>
                 </Popover>
