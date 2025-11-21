@@ -286,7 +286,7 @@ export default function LoanCalculator() {
 
   if (!mounted) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto py-4 sm:py-8 px-4">
         <Card>
           <CardHeader>
             <Skeleton className="h-8 w-64" />
