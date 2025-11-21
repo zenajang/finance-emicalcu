@@ -10,8 +10,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle, TrendingUp, Calendar, Percent, Clock, ChevronDown, ChevronUp } from "lucide-react"
+import { AlertCircle, TrendingUp, Calendar, Percent, Clock, ChevronDown, ChevronUp, Globe } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { translations, languages, type Language } from "@/lib/i18n/translations"
 
 const INTEREST_RATE = 0.2 / 12
 const CAPACITY = 550000
@@ -26,6 +28,7 @@ interface PaymentScheduleItem {
 
 export default function LoanCalculator() {
   const [mounted, setMounted] = useState(false)
+  const [language, setLanguage] = useState<Language>('en')
   const [visaExpiry, setVisaExpiry] = useState<string>("")
   const [loanDuration, setLoanDuration] = useState<string>("")
   const [maxDuration, setMaxDuration] = useState<number>(0)
@@ -56,6 +59,8 @@ export default function LoanCalculator() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const t = translations[language]
 
   useEffect(() => {
     if (visaExpiry) {
@@ -314,17 +319,41 @@ export default function LoanCalculator() {
       <div className="space-y-4 sm:space-y-6">
         {/* Header */}
         <div className="space-y-4">
-          <div className="flex items-center justify-center">
-            <img
-              src="/gme-logo.png"
-              alt="GME Finance"
-              className="h-8 w-auto"
-            />
+          <div className="flex items-center justify-between">
+            <div className="flex-1"></div>
+            <div className="flex items-center justify-center flex-1">
+              <img
+                src="/gme-logo.png"
+                alt="GME Finance"
+                className="h-8 w-auto"
+              />
+            </div>
+            <div className="flex-1 flex justify-end">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Globe className="h-4 w-4" />
+                    <span className="hidden sm:inline">{languages.find(l => l.code === language)?.nativeName}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="max-h-[400px] overflow-y-auto">
+                  {languages.map((lang) => (
+                    <DropdownMenuItem
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={language === lang.code ? 'bg-accent' : ''}
+                    >
+                      {lang.nativeName}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
           <div className="space-y-2 text-center px-4">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">대출 계산기</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.title}</h1>
             <p className="text-sm sm:text-base text-muted-foreground">
-              비자 기간에 맞는 최적의 대출 조건을 찾아보세요
+              {t.subtitle}
             </p>
           </div>
         </div>
@@ -332,14 +361,14 @@ export default function LoanCalculator() {
         {/* Main Card */}
         <Card>
           <CardHeader>
-            <CardTitle>대출 정보 입력</CardTitle>
-            <CardDescription>비자 만료일과 원하는 대출 기간을 선택하세요</CardDescription>
+            <CardTitle>{t.loanInfo}</CardTitle>
+            <CardDescription>{t.loanInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Input Fields */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="visaExpiry">비자 만료일</Label>
+                <Label htmlFor="visaExpiry">{t.visaExpiry}</Label>
                 <Input
                   id="visaExpiry"
                   type="date"
@@ -349,16 +378,16 @@ export default function LoanCalculator() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="loanDuration">신청 대출 기간</Label>
+                <Label htmlFor="loanDuration">{t.loanDuration}</Label>
                 <Select value={loanDuration} onValueChange={setLoanDuration} disabled={!visaExpiry}>
                   <SelectTrigger id="loanDuration">
-                    <SelectValue placeholder="대출 기간을 선택하세요" />
+                    <SelectValue placeholder={t.selectLoanDuration} />
                   </SelectTrigger>
                   <SelectContent>
                     {getAvailableDurations().map(duration => (
                       <SelectItem key={duration} value={duration.toString()}>
-                        {duration}개월
-                        {duration >= 12 && duration % 12 === 0 ? ` (${duration / 12}년)` : ''}
+                        {duration}{t.months}
+                        {duration >= 12 && duration % 12 === 0 ? ` (${duration / 12}${duration / 12 === 1 ? t.year : t.years})` : ''}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -373,7 +402,7 @@ export default function LoanCalculator() {
               <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span className="text-sm">오늘 날짜</span>
+                  <span className="text-sm">{t.todayDate}</span>
                 </div>
                 <div className="font-semibold">{formatDate(new Date())}</div>
               </div>
@@ -381,15 +410,15 @@ export default function LoanCalculator() {
               <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  <span className="text-sm">최대 대출 가능 기간</span>
+                  <span className="text-sm">{t.maxLoanPeriod}</span>
                 </div>
-                <div className="font-semibold">{maxDuration}개월</div>
+                <div className="font-semibold">{maxDuration}{t.months}</div>
               </div>
 
               <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Percent className="h-4 w-4" />
-                  <span className="text-sm">이자율 (연)</span>
+                  <span className="text-sm">{t.interestRate}</span>
                 </div>
                 <div className="font-semibold">20%</div>
               </div>
@@ -397,7 +426,7 @@ export default function LoanCalculator() {
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span className="text-sm">대출 종료일</span>
+                  <span className="text-sm">{t.loanEndDate}</span>
                 </div>
                 <div className="font-semibold">{contractEnd || '-'}</div>
               </div>
@@ -409,10 +438,9 @@ export default function LoanCalculator() {
                 <Separator />
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>대출 기간 초과</AlertTitle>
+                  <AlertTitle>{t.loanExceedsWarning}</AlertTitle>
                   <AlertDescription>
-                    신청 대출 기간({loanDuration}개월)이 최대 가능 기간({maxDuration}개월)을 초과합니다.
-                    비자 기간을 초과하는 대출은 승인되지 않을 수 있습니다.
+                    {t.loanExceedsDesc.replace('{applied}', loanDuration).replace('{max}', maxDuration.toString())}
                   </AlertDescription>
                 </Alert>
               </>
@@ -427,40 +455,40 @@ export default function LoanCalculator() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5" />
-                  최대 추천 대출
+                  {t.maxRecommendedLoan}
                 </CardTitle>
-                <Badge>추천</Badge>
+                <Badge>{t.recommended}</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">대출 금액</p>
-                  <p className="text-2xl sm:text-3xl font-bold break-all">{formatCurrency(maxLoanAmount)}원</p>
+                  <p className="text-sm text-muted-foreground">{t.loanAmount}</p>
+                  <p className="text-2xl sm:text-3xl font-bold break-all">{formatCurrency(maxLoanAmount)}{t.won}</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">월 상환액</p>
-                  <p className="text-2xl sm:text-3xl font-bold break-all">{formatCurrency(maxLoanEMI)}원</p>
+                  <p className="text-sm text-muted-foreground">{t.monthlyPayment}</p>
+                  <p className="text-2xl sm:text-3xl font-bold break-all">{formatCurrency(maxLoanEMI)}{t.won}</p>
                 </div>
               </div>
               <Separator />
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">총 상환액</p>
+                  <p className="text-sm text-muted-foreground">{t.totalPayment}</p>
                   <p className="text-lg sm:text-xl font-semibold break-all">
-                    {formatCurrency(maxLoanEMI * parseInt(loanDuration))}원
+                    {formatCurrency(maxLoanEMI * parseInt(loanDuration))}{t.won}
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">총 이자</p>
+                  <p className="text-sm text-muted-foreground">{t.totalInterest}</p>
                   <p className="text-lg sm:text-xl font-semibold text-orange-600 break-all">
-                    {formatCurrency(maxLoanEMI * parseInt(loanDuration) - maxLoanAmount)}원
+                    {formatCurrency(maxLoanEMI * parseInt(loanDuration) - maxLoanAmount)}{t.won}
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">원금</p>
+                  <p className="text-sm text-muted-foreground">{t.principal}</p>
                   <p className="text-lg sm:text-xl font-semibold text-green-600 break-all">
-                    {formatCurrency(maxLoanAmount)}원
+                    {formatCurrency(maxLoanAmount)}{t.won}
                   </p>
                 </div>
               </div>
@@ -473,12 +501,12 @@ export default function LoanCalculator() {
                 {showSchedule ? (
                   <>
                     <ChevronUp className="mr-2 h-4 w-4" />
-                    상환 스케줄 숨기기
+                    {t.hideSchedule}
                   </>
                 ) : (
                   <>
                     <ChevronDown className="mr-2 h-4 w-4" />
-                    상환 스케줄 보기
+                    {t.showSchedule}
                   </>
                 )}
               </Button>
@@ -487,11 +515,11 @@ export default function LoanCalculator() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="text-center w-16 sm:w-20">회차</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">월 상환액</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">원금</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">이자</TableHead>
-                        <TableHead className="text-right whitespace-nowrap">잔액</TableHead>
+                        <TableHead className="text-center w-16 sm:w-20">{t.installment}</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">{t.monthlyPayment}</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">{t.principal}</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">{t.interest}</TableHead>
+                        <TableHead className="text-right whitespace-nowrap">{t.balance}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -501,16 +529,16 @@ export default function LoanCalculator() {
                             {item.month}
                           </TableCell>
                           <TableCell className="text-right text-xs sm:text-sm whitespace-nowrap">
-                            {formatCurrency(Math.round(item.payment))}원
+                            {formatCurrency(Math.round(item.payment))}{t.won}
                           </TableCell>
                           <TableCell className="text-right text-xs sm:text-sm text-green-600 whitespace-nowrap">
-                            {formatCurrency(Math.round(item.principal))}원
+                            {formatCurrency(Math.round(item.principal))}{t.won}
                           </TableCell>
                           <TableCell className="text-right text-xs sm:text-sm text-orange-600 whitespace-nowrap">
-                            {formatCurrency(Math.round(item.interest))}원
+                            {formatCurrency(Math.round(item.interest))}{t.won}
                           </TableCell>
                           <TableCell className="text-right text-xs sm:text-sm font-medium whitespace-nowrap">
-                            {formatCurrency(Math.round(item.balance))}원
+                            {formatCurrency(Math.round(item.balance))}{t.won}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -525,8 +553,8 @@ export default function LoanCalculator() {
         {/* Table Section */}
         <Card>
           <CardHeader>
-            <CardTitle>상세 대출표</CardTitle>
-            <CardDescription>대출 금액과 기간별 월 상환액을 확인하세요</CardDescription>
+            <CardTitle>{t.detailedLoanTable}</CardTitle>
+            <CardDescription>{t.detailedLoanTableDesc}</CardDescription>
           </CardHeader>
           <CardContent>
             <Button
@@ -534,7 +562,7 @@ export default function LoanCalculator() {
               variant={showTable ? "outline" : "default"}
               className="w-full"
             >
-              {showTable ? '대출표 숨기기' : '대출표 보기'}
+              {showTable ? t.hideLoanTable : t.showLoanTable}
             </Button>
 
             {showTable && (
@@ -542,10 +570,10 @@ export default function LoanCalculator() {
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className="bg-yellow-400 text-black">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    추천 대출
+                    {t.recommendedLoan}
                   </Badge>
                   <Badge variant="secondary" className="bg-blue-400 text-white">
-                    중간 위험
+                    {t.mediumRisk}
                   </Badge>
                 </div>
 
@@ -554,7 +582,7 @@ export default function LoanCalculator() {
                     <table className="w-full table-auto">
                       <thead>
                         <tr className="border-b bg-muted/50">
-                          <th className="h-12 px-4 text-left align-middle font-medium whitespace-nowrap">기간</th>
+                          <th className="h-12 px-4 text-left align-middle font-medium whitespace-nowrap">{t.period}</th>
                           {loanAmounts.map(amount => (
                             <th key={amount} className="h-12 px-4 text-right align-middle font-medium whitespace-nowrap">
                               {formatCurrency(amount)}
@@ -573,7 +601,7 @@ export default function LoanCalculator() {
                             }`}
                           >
                             <td className="p-4 align-middle font-medium whitespace-nowrap">
-                              {row.duration}개월
+                              {row.duration}{t.months}
                             </td>
                             {loanAmounts.map(amount => {
                               const cell = row[amount]
