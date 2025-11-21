@@ -325,15 +325,20 @@ export default function LoanCalculator() {
         {/* Header */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex-1"></div>
-            <div className="flex items-center justify-center flex-1">
+            <div className="flex items-center gap-4">
               <img
                 src="/gme-logo.png"
                 alt="GME Finance"
                 className="h-8 w-auto"
               />
+              <div className="space-y-1">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight">{t.title}</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
+                  {t.subtitle}
+                </p>
+              </div>
             </div>
-            <div className="flex-1 flex justify-end">
+            <div className="flex justify-end">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="gap-2">
@@ -354,12 +359,6 @@ export default function LoanCalculator() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          </div>
-          <div className="space-y-2 text-center px-4">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{t.title}</h1>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              {t.subtitle}
-            </p>
           </div>
         </div>
 
@@ -612,9 +611,9 @@ export default function LoanCalculator() {
                     <table className="w-full table-auto">
                       <thead>
                         <tr className="border-b bg-muted/50">
-                          <th className="h-12 px-4 text-left align-middle font-medium whitespace-nowrap">{t.period}</th>
+                          <th className="h-12 px-4 text-left align-middle font-medium text-xs sm:text-sm whitespace-nowrap">{t.period}</th>
                           {loanAmounts.map(amount => (
-                            <th key={amount} className="h-12 px-4 text-right align-middle font-medium whitespace-nowrap">
+                            <th key={amount} className="h-12 px-4 text-right align-middle font-medium text-xs sm:text-sm whitespace-nowrap">
                               {formatCurrency(amount)}
                             </th>
                           ))}
@@ -630,7 +629,7 @@ export default function LoanCalculator() {
                                 : 'hover:bg-muted/50'
                             }`}
                           >
-                            <td className="p-4 align-middle font-medium whitespace-nowrap">
+                            <td className="p-4 align-middle font-medium text-xs sm:text-sm whitespace-nowrap">
                               {row.duration}{t.months}
                             </td>
                             {loanAmounts.map(amount => {
@@ -638,7 +637,7 @@ export default function LoanCalculator() {
                               return (
                                 <td
                                   key={amount}
-                                  className={`p-4 align-middle text-right whitespace-nowrap ${
+                                  className={`p-4 align-middle text-right text-xs sm:text-sm whitespace-nowrap ${
                                     cell.highlight === 'yellow'
                                       ? 'bg-yellow-100 font-semibold'
                                       : cell.highlight === 'blue'
