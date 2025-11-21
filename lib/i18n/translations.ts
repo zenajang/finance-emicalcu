@@ -36,7 +36,8 @@ export const translations = {
     recommendedLoan: "Recommended Loan",
     mediumRisk: "Medium Risk",
     period: "Period",
-    won: ""
+    won: "",
+  pickDate: "Pick a date"
   },
   ko: {
     title: "대출 계산기",
@@ -75,7 +76,8 @@ export const translations = {
     recommendedLoan: "추천 대출",
     mediumRisk: "중간 위험",
     period: "기간",
-    won: "원"
+    won: "원",
+  pickDate: "날짜 선택"
   },
   my: { // Myanmar
     title: "ချေးငွေတွက်စက်",
@@ -114,7 +116,8 @@ export const translations = {
     recommendedLoan: "အကြံပြုချေးငွေ",
     mediumRisk: "အလယ်အလတ်အန္တရာယ်",
     period: "ကာလ",
-    won: ""
+    won: "",
+  pickDate: "ရက်စွဲရွေးပါ"
   },
   si: { // Sri Lanka (Sinhala)
     title: "ණය ගණකය",
@@ -153,7 +156,8 @@ export const translations = {
     recommendedLoan: "නිර්දේශිත ණය",
     mediumRisk: "මධ්‍ය අවදානම",
     period: "කාලය",
-    won: ""
+    won: "",
+  pickDate: "දිනයක් තෝරන්න"
   },
   id: { // Indonesia
     title: "Kalkulator Pinjaman",
@@ -192,7 +196,8 @@ export const translations = {
     recommendedLoan: "Pinjaman yang Direkomendasikan",
     mediumRisk: "Risiko Sedang",
     period: "Periode",
-    won: ""
+    won: "",
+  pickDate: "Pilih tanggal"
   },
   km: { // Cambodia
     title: "ម៉ាស៊ីនគណនាប្រាក់កម្ចី",
@@ -231,7 +236,8 @@ export const translations = {
     recommendedLoan: "ប្រាក់កម្ចីដែលបានផ្ដល់អនុសាសន៍",
     mediumRisk: "ហានិភ័យមធ្យម",
     period: "រយៈពេល",
-    won: ""
+    won: "",
+  pickDate: "ជ្រើសរើសកាលបរិច្ឆេទ"
   },
   ne: { // Nepal
     title: "ऋण क्यालकुलेटर",
@@ -270,7 +276,8 @@ export const translations = {
     recommendedLoan: "सिफारिस गरिएको ऋण",
     mediumRisk: "मध्यम जोखिम",
     period: "अवधि",
-    won: ""
+    won: "",
+  pickDate: "मिति छान्नुहोस्"
   },
   bn: { // Bangladesh
     title: "ঋণ ক্যালকুলেটর",
@@ -309,7 +316,8 @@ export const translations = {
     recommendedLoan: "প্রস্তাবিত ঋণ",
     mediumRisk: "মাঝারি ঝুঁকি",
     period: "সময়কাল",
-    won: ""
+    won: "",
+  pickDate: "তারিখ নির্বাচন করুন"
   },
   th: { // Thailand
     title: "เครื่องคำนวณเงินกู้",
@@ -348,7 +356,8 @@ export const translations = {
     recommendedLoan: "เงินกู้ที่แนะนำ",
     mediumRisk: "ความเสี่ยงปานกลาง",
     period: "ระยะเวลา",
-    won: ""
+    won: "",
+  pickDate: "เลือกวันที่"
   },
   uz: { // Uzbekistan
     title: "Kredit Kalkulyatori",
@@ -387,7 +396,8 @@ export const translations = {
     recommendedLoan: "Tavsiya Etilgan Kredit",
     mediumRisk: "O'rta Xavf",
     period: "Muddat",
-    won: ""
+    won: "",
+  pickDate: "Sanani tanlang"
   },
   vi: { // Vietnam
     title: "Máy Tính Khoản Vay",
@@ -426,7 +436,8 @@ export const translations = {
     recommendedLoan: "Khoản Vay Được Đề Xuất",
     mediumRisk: "Rủi Ro Trung Bình",
     period: "Thời Gian",
-    won: ""
+    won: "",
+  pickDate: "Chọn ngày"
   },
   zh: { // China
     title: "贷款计算器",
@@ -465,7 +476,8 @@ export const translations = {
     recommendedLoan: "推荐贷款",
     mediumRisk: "中等风险",
     period: "期限",
-    won: ""
+    won: "",
+  pickDate: "选择日期"
   },
   hi: { // India
     title: "ऋण कैलकुलेटर",
@@ -504,7 +516,8 @@ export const translations = {
     recommendedLoan: "अनुशंसित ऋण",
     mediumRisk: "मध्यम जोखिम",
     period: "अवधि",
-    won: ""
+    won: "",
+  pickDate: "तिथि चुनें"
   },
   mn: { // Mongolia
     title: "Зээлийн Тооцоолуур",
@@ -543,7 +556,8 @@ export const translations = {
     recommendedLoan: "Санал Болгох Зээл",
     mediumRisk: "Дунд Эрсдэл",
     period: "Хугацаа",
-    won: ""
+    won: "",
+  pickDate: "Огноо сонгох"
   },
   ru: { // Russia
     title: "Кредитный Калькулятор",
@@ -582,7 +596,8 @@ export const translations = {
     recommendedLoan: "Рекомендуемый Кредит",
     mediumRisk: "Средний Риск",
     period: "Период",
-    won: ""
+    won: "",
+  pickDate: "Выберите дату"
   },
   ur: { // Pakistan
     title: "قرض کیلکولیٹر",
@@ -621,7 +636,8 @@ export const translations = {
     recommendedLoan: "تجویز کردہ قرض",
     mediumRisk: "درمیانی خطرہ",
     period: "مدت",
-    won: ""
+    won: "",
+  pickDate: "تاریخ منتخب کریں"
   },
   us: { // United States (English - same as 'en')
     title: "Loan Calculator",
@@ -660,7 +676,8 @@ export const translations = {
     recommendedLoan: "Recommended Loan",
     mediumRisk: "Medium Risk",
     period: "Period",
-    won: ""
+    won: "",
+  pickDate: "Pick a date"
   }
 } as const
 

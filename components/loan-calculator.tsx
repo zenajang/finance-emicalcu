@@ -450,7 +450,7 @@ export default function LoanCalculator() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {visaExpiryDate ? format(visaExpiryDate, "PPP", { locale: dateFnsLocales[language] }) : <span>Pick a date</span>}
+                      {visaExpiryDate ? format(visaExpiryDate, "PPP", { locale: dateFnsLocales[language] }) : <span>{t.pickDate}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
