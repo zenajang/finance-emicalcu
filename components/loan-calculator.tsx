@@ -399,7 +399,7 @@ export default function LoanCalculator() {
                       }}
                       disabled={(date) => date < new Date()}
                       initialFocus
-                      captionLayout="dropdown-months"
+                      captionLayout="dropdown"
                       fromYear={new Date().getFullYear()}
                       toYear={new Date().getFullYear() + 10}
                     />
