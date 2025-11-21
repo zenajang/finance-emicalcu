@@ -10,10 +10,19 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle, TrendingUp, Calendar, Percent, Clock } from "lucide-react"
+import { AlertCircle, TrendingUp, Calendar, Percent, Clock, ChevronDown, ChevronUp } from "lucide-react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 const INTEREST_RATE = 0.2 / 12
 const CAPACITY = 550000
+
+interface PaymentScheduleItem {
+  month: number
+  payment: number
+  principal: number
+  interest: number
+  balance: number
+}
 
 export default function LoanCalculator() {
   const [mounted, setMounted] = useState(false)
@@ -27,6 +36,8 @@ export default function LoanCalculator() {
   const [showTable, setShowTable] = useState<boolean>(false)
   const [isTableUnlocked, setIsTableUnlocked] = useState<boolean>(false)
   const [tableData, setTableData] = useState<any[]>([])
+  const [paymentSchedule, setPaymentSchedule] = useState<PaymentScheduleItem[]>([])
+  const [showSchedule, setShowSchedule] = useState<boolean>(true)
   const [loanAmounts] = useState<number[]>(() => {
     const amounts = []
     for (let i = 2000000; i <= 40000000; i += 1000000) {
@@ -44,10 +55,6 @@ export default function LoanCalculator() {
 
   useEffect(() => {
     setMounted(true)
-    const today = new Date()
-    const defaultVisa = new Date()
-    defaultVisa.setFullYear(today.getFullYear() + 2)
-    setVisaExpiry(formatDateForInput(defaultVisa))
   }, [])
 
   useEffect(() => {
@@ -56,6 +63,12 @@ export default function LoanCalculator() {
       generateTableData()
     }
   }, [visaExpiry, loanDuration])
+
+  useEffect(() => {
+    if (maxLoanAmount > 0 && loanDuration) {
+      generatePaymentSchedule()
+    }
+  }, [maxLoanAmount, loanDuration])
 
   const formatDate = (date: Date): string => {
     return date.toLocaleDateString('ko-KR', {
@@ -212,6 +225,31 @@ export default function LoanCalculator() {
       return row
     })
     setTableData(data)
+  }
+
+  const generatePaymentSchedule = () => {
+    if (!maxLoanAmount || !loanDuration) return
+
+    const duration = parseInt(loanDuration)
+    const monthlyPayment = maxLoanEMI
+    let balance = maxLoanAmount
+    const schedule: PaymentScheduleItem[] = []
+
+    for (let month = 1; month <= duration; month++) {
+      const interestPayment = balance * INTEREST_RATE
+      const principalPayment = monthlyPayment - interestPayment
+      balance = balance - principalPayment
+
+      schedule.push({
+        month,
+        payment: monthlyPayment,
+        principal: principalPayment,
+        interest: interestPayment,
+        balance: Math.max(0, balance)
+      })
+    }
+
+    setPaymentSchedule(schedule)
   }
 
   const toggleTable = () => {
@@ -402,15 +440,91 @@ export default function LoanCalculator() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">대출 금액</p>
-                <p className="text-4xl font-bold">{formatCurrency(maxLoanAmount)}원</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">대출 금액</p>
+                  <p className="text-3xl font-bold">{formatCurrency(maxLoanAmount)}원</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">월 상환액</p>
+                  <p className="text-3xl font-bold">{formatCurrency(maxLoanEMI)}원</p>
+                </div>
               </div>
               <Separator />
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">월 상환액</p>
-                <p className="text-2xl font-semibold">{formatCurrency(maxLoanEMI)}원</p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">총 상환액</p>
+                  <p className="text-xl font-semibold">
+                    {formatCurrency(maxLoanEMI * parseInt(loanDuration))}원
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">총 이자</p>
+                  <p className="text-xl font-semibold text-orange-600">
+                    {formatCurrency(maxLoanEMI * parseInt(loanDuration) - maxLoanAmount)}원
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">원금</p>
+                  <p className="text-xl font-semibold text-green-600">
+                    {formatCurrency(maxLoanAmount)}원
+                  </p>
+                </div>
               </div>
+              <Separator />
+              <Button
+                onClick={() => setShowSchedule(!showSchedule)}
+                variant="outline"
+                className="w-full"
+              >
+                {showSchedule ? (
+                  <>
+                    <ChevronUp className="mr-2 h-4 w-4" />
+                    상환 스케줄 숨기기
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="mr-2 h-4 w-4" />
+                    상환 스케줄 보기
+                  </>
+                )}
+              </Button>
+              {showSchedule && paymentSchedule.length > 0 && (
+                <div className="mt-4 rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="text-center">회차</TableHead>
+                        <TableHead className="text-right">월 상환액</TableHead>
+                        <TableHead className="text-right">원금</TableHead>
+                        <TableHead className="text-right">이자</TableHead>
+                        <TableHead className="text-right">잔액</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {paymentSchedule.map((item) => (
+                        <TableRow key={item.month}>
+                          <TableCell className="text-center font-medium">
+                            {item.month}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {formatCurrency(Math.round(item.payment))}원
+                          </TableCell>
+                          <TableCell className="text-right text-green-600">
+                            {formatCurrency(Math.round(item.principal))}원
+                          </TableCell>
+                          <TableCell className="text-right text-orange-600">
+                            {formatCurrency(Math.round(item.interest))}원
+                          </TableCell>
+                          <TableCell className="text-right font-medium">
+                            {formatCurrency(Math.round(item.balance))}원
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
             </CardContent>
           </Card>
         )}
