@@ -10,10 +10,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AlertCircle, TrendingUp, Calendar, Percent, Clock, ChevronDown, ChevronUp, Globe } from "lucide-react"
+import { AlertCircle, TrendingUp, Calendar as CalendarIcon, Percent, Clock, ChevronDown, ChevronUp, Globe } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Calendar } from "@/components/ui/calendar"
 import { translations, languages, type Language } from "@/lib/i18n/translations"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
 
 const INTEREST_RATE = 0.2 / 12
 const CAPACITY = 550000
@@ -30,6 +34,7 @@ export default function LoanCalculator() {
   const [mounted, setMounted] = useState(false)
   const [language, setLanguage] = useState<Language>('en')
   const [visaExpiry, setVisaExpiry] = useState<string>("")
+  const [visaExpiryDate, setVisaExpiryDate] = useState<Date>()
   const [loanDuration, setLoanDuration] = useState<string>("")
   const [maxDuration, setMaxDuration] = useState<number>(0)
   const [contractEnd, setContractEnd] = useState<string>("")
@@ -368,13 +373,35 @@ export default function LoanCalculator() {
             {/* Input Fields */}
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="visaExpiry">{t.visaExpiry}</Label>
-                <Input
-                  id="visaExpiry"
-                  type="date"
-                  value={visaExpiry}
-                  onChange={(e) => setVisaExpiry(e.target.value)}
-                />
+                <Label>{t.visaExpiry}</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !visaExpiryDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {visaExpiryDate ? format(visaExpiryDate, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={visaExpiryDate}
+                      onSelect={(date) => {
+                        setVisaExpiryDate(date)
+                        if (date) {
+                          setVisaExpiry(format(date, "yyyy-MM-dd"))
+                        }
+                      }}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
 
               <div className="space-y-2">
@@ -401,7 +428,7 @@ export default function LoanCalculator() {
             <div className="space-y-3">
               <div className="flex items-center justify-between py-3 border-b">
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
+                  <CalendarIcon className="h-4 w-4" />
                   <span className="text-sm">{t.todayDate}</span>
                 </div>
                 <div className="font-semibold">{formatDate(new Date())}</div>
@@ -425,7 +452,7 @@ export default function LoanCalculator() {
 
               <div className="flex items-center justify-between py-3">
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
+                  <CalendarIcon className="h-4 w-4" />
                   <span className="text-sm">{t.loanEndDate}</span>
                 </div>
                 <div className="font-semibold">{contractEnd || '-'}</div>
