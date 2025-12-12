@@ -1,10 +1,11 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Globe, LogOut, Calculator, LayoutDashboard } from "lucide-react"
+import { Globe, LogOut, LogIn, Calculator, LayoutDashboard } from "lucide-react"
 import { useTranslation } from "@/lib/hooks/useTranslation"
 import Link from "next/link"
 
@@ -12,15 +13,38 @@ export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
   const { t, language, setLanguage, languages } = useTranslation()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setIsLoggedIn(!!session)
+      setIsLoading(false)
+    }
+    checkAuth()
+
+    // 인증 상태 변경 리스너
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
+    router.push("/calculator")
+  }
+
+  const handleLogin = () => {
     router.push("/auth/signin")
   }
 
+  // 비로그인 시 계산기만, 로그인 시 대시보드도 표시
   const tabs = [
     { href: "/calculator", label: t("calculator") || "계산기", icon: Calculator },
-    { href: "/dashboard", label: t("dashboard") || "대시보드", icon: LayoutDashboard },
+    ...(isLoggedIn ? [{ href: "/dashboard", label: t("dashboard") || "대시보드", icon: LayoutDashboard }] : []),
   ]
 
   return (
@@ -59,10 +83,17 @@ export default function Header() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 text-gray-600 hover:text-red-600 hover:bg-red-50">
-              <LogOut className="h-4 w-4" />
-              <span className="hidden sm:inline text-sm">{t("logout")}</span>
-            </Button>
+            {isLoggedIn ? (
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 text-gray-600 hover:text-red-600 hover:bg-red-50">
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline text-sm">{t("logout")}</span>
+              </Button>
+            ) : (
+              <Button variant="ghost" size="sm" onClick={handleLogin} className="gap-2 text-gray-600 hover:text-red-600 hover:bg-red-50">
+                <LogIn className="h-4 w-4" />
+                <span className="hidden sm:inline text-sm">{t("login") || "로그인"}</span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
