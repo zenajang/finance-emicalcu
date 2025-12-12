@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -21,15 +22,32 @@ interface Customer {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
   const { t } = useTranslation()
   const [customers, setCustomers] = useState<Customer[]>([])
   const [loading, setLoading] = useState(true)
+  const [authChecked, setAuthChecked] = useState(false)
   const [corridorFilter, setCorridorFilter] = useState<string>("all")
   const [corridors, setCorridors] = useState<string[]>([])
 
+  // 인증 체크 - 로그인하지 않은 사용자는 로그인 페이지로 리다이렉트
   useEffect(() => {
-    fetchCustomers()
-  }, [])
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        router.replace("/auth/signin")
+        return
+      }
+      setAuthChecked(true)
+    }
+    checkAuth()
+  }, [router])
+
+  useEffect(() => {
+    if (authChecked) {
+      fetchCustomers()
+    }
+  }, [authChecked])
 
   const fetchCustomers = async () => {
     setLoading(true)
@@ -71,6 +89,29 @@ export default function DashboardPage() {
       hour: "2-digit",
       minute: "2-digit",
     })
+  }
+
+  // 인증 체크 중일 때 로딩 표시
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto py-6 sm:py-8 px-4">
+          <Card className="shadow-sm border-0 bg-white rounded-2xl overflow-hidden">
+            <CardHeader className="bg-white border-b pb-5">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-4 w-24 mt-2" />
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="h-12 w-full" />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
   }
 
   return (

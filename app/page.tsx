@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 
 export default function Home() {
-  // TODO: 나중에 비회원 접근 허용 시 여기서 분기 처리
-  redirect("/auth/signin")
+  // 비로그인 사용자도 계산기 접근 가능
+  redirect("/calculator")
 }
