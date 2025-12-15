@@ -2,7 +2,7 @@ export const ko = {
   title: "대출 계산기",
   subtitle: "비자 기간에 맞는 최적의 대출 조건을 찾아보세요",
   loanInfo: "대출 정보 입력",
-  loanInfoDesc: "비자 만료일과 원하는 대출 기간을 선택하세요",
+  loanInfoDesc: "비자 만료일과 원하는 대출 기간을 선택하세요.",
   visaExpiry: "비자 만료일",
   loanDuration: "신청 대출 기간",
   selectLoanDuration: "대출 기간을 선택하세요",
@@ -52,6 +52,7 @@ export const ko = {
   emailFailed: "이메일 전송에 실패했습니다. 다시 시도해주세요.",
   emailRequired: "고객 이메일 주소를 입력해주세요.",
   logout: "로그아웃",
+  login: "로그인",
   // Navigation
   calculator: "계산기",
   dashboard: "대시보드",

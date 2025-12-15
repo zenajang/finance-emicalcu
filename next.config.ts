@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/',
+        source: '/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store, no-cache, must-revalidate',
+            value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
           },
         ],
       },
