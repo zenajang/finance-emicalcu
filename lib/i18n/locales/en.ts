@@ -2,7 +2,7 @@ export const en = {
   title: "Loan Calculator",
   subtitle: "Find the best loan terms for your visa period",
   loanInfo: "Loan Information",
-  loanInfoDesc: "Select your visa expiry date and desired loan period",
+  loanInfoDesc: "Select your visa expiry date and desired loan period.",
   visaExpiry: "Visa Expiry Date",
   loanDuration: "Loan Duration",
   selectLoanDuration: "Select loan duration",
