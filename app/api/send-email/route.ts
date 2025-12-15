@@ -167,97 +167,132 @@ export async function POST(request: NextRequest) {
     const { data, error: emailError } = await resend.emails.send({
       from: 'GME Finance <noreply@gmefinance.com>',
       to: customerEmail,
-      subject: 'GME Finance - 대출 계산 결과',
+      subject: 'GME Finance - Your Loan Calculation Result',
       html: `
         <!DOCTYPE html>
         <html>
         <head>
           <meta charset="utf-8">
-          <style>
-            body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 30px; text-align: center; border-radius: 12px 12px 0 0; }
-            .header h1 { margin: 0; font-size: 24px; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 12px 12px; }
-            .info-box { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-            .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
-            .info-row:last-child { border-bottom: none; }
-            .label { color: #6b7280; }
-            .value { font-weight: 600; color: #111827; }
-            .highlight { color: #dc2626; font-size: 24px; }
-            .footer { text-align: center; padding: 20px; color: #6b7280; font-size: 12px; }
-          </style>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>GME Finance</h1>
-              <p>대출 계산 결과</p>
-            </div>
-            <div class="content">
-              ${customerName ? `
-              <div class="info-box">
-                <h3 style="margin-top: 0; color: #374151;">고객 정보</h3>
-                <div class="info-row">
-                  <span class="label">이름</span>
-                  <span class="value">${customerName}</span>
-                </div>
-                ${customerPhone ? `
-                <div class="info-row">
-                  <span class="label">연락처</span>
-                  <span class="value">${customerPhone}</span>
-                </div>
-                ` : ''}
-              </div>
-              ` : ''}
+        <body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: Arial, sans-serif;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 40px 20px;">
+            <tr>
+              <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
 
-              <div class="info-box">
-                <h3 style="margin-top: 0; color: #374151;">대출 정보</h3>
-                <div class="info-row">
-                  <span class="label">대출 금액</span>
-                  <span class="value highlight">${formatCurrency(loanAmount)}원</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">월 상환액</span>
-                  <span class="value">${formatCurrency(monthlyPayment)}원</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">대출 기간</span>
-                  <span class="value">${loanDuration}개월</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">총 상환액</span>
-                  <span class="value">${formatCurrency(totalPayment)}원</span>
-                </div>
-                <div class="info-row">
-                  <span class="label">총 이자</span>
-                  <span class="value">${formatCurrency(totalInterest)}원</span>
-                </div>
-              </div>
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); padding: 40px 30px; text-align: center;">
+                      <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">GME Finance</h1>
+                      <p style="margin: 10px 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">Your Loan Calculation Result</p>
+                    </td>
+                  </tr>
 
-              ${managerName || managerContact ? `
-              <div class="info-box">
-                <h3 style="margin-top: 0; color: #374151;">담당자 정보</h3>
-                ${managerName ? `
-                <div class="info-row">
-                  <span class="label">담당자</span>
-                  <span class="value">${managerName}</span>
-                </div>
-                ` : ''}
-                ${managerContact ? `
-                <div class="info-row">
-                  <span class="label">연락처</span>
-                  <span class="value">${managerContact}</span>
-                </div>
-                ` : ''}
-              </div>
-              ` : ''}
-            </div>
-            <div class="footer">
-              <p>본 이메일은 GME Finance에서 발송되었습니다.</p>
-              <p>© 2025 GME Finance. All rights reserved.</p>
-            </div>
-          </div>
+                  <!-- Main Content -->
+                  <tr>
+                    <td style="padding: 40px 30px;">
+
+                      <!-- Highlight Box - Monthly Payment -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-radius: 12px; margin-bottom: 30px;">
+                        <tr>
+                          <td style="padding: 30px; text-align: center;">
+                            <p style="margin: 0 0 8px; color: #991b1b; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Monthly Payment</p>
+                            <p style="margin: 0; color: #dc2626; font-size: 36px; font-weight: bold;">${formatCurrency(monthlyPayment)} KRW</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Loan Details Grid -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
+                        <tr>
+                          <td style="padding: 20px; background-color: #f9fafb; border-radius: 12px 0 0 12px; text-align: center; width: 50%;">
+                            <p style="margin: 0 0 5px; color: #6b7280; font-size: 12px; text-transform: uppercase;">Loan Amount</p>
+                            <p style="margin: 0; color: #111827; font-size: 18px; font-weight: 600;">${formatCurrency(loanAmount)} KRW</p>
+                          </td>
+                          <td style="padding: 20px; background-color: #f9fafb; border-radius: 0 12px 12px 0; text-align: center; width: 50%; border-left: 2px solid #e5e7eb;">
+                            <p style="margin: 0 0 5px; color: #6b7280; font-size: 12px; text-transform: uppercase;">Loan Period</p>
+                            <p style="margin: 0; color: #111827; font-size: 18px; font-weight: 600;">${loanDuration} months</p>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Summary Section -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
+                        <tr>
+                          <td style="background-color: #f9fafb; padding: 15px 20px; border-bottom: 1px solid #e5e7eb;">
+                            <p style="margin: 0; color: #374151; font-weight: 600; font-size: 14px;">Payment Summary</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 0;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td style="padding: 15px 20px; border-bottom: 1px solid #f3f4f6;">
+                                  <span style="color: #6b7280;">Total Payment</span>
+                                </td>
+                                <td style="padding: 15px 20px; border-bottom: 1px solid #f3f4f6; text-align: right;">
+                                  <span style="color: #111827; font-weight: 600;">${formatCurrency(totalPayment)} KRW</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding: 15px 20px;">
+                                  <span style="color: #6b7280;">Total Interest</span>
+                                </td>
+                                <td style="padding: 15px 20px; text-align: right;">
+                                  <span style="color: #dc2626; font-weight: 600;">${formatCurrency(totalInterest)} KRW</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+
+                      ${customerName || customerPhone ? `
+                      <!-- Customer Info -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;">
+                        <tr>
+                          <td style="background-color: #f9fafb; padding: 15px 20px; border-bottom: 1px solid #e5e7eb;">
+                            <p style="margin: 0; color: #374151; font-weight: 600; font-size: 14px;">Customer Information</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 15px 20px;">
+                            ${customerName ? `<p style="margin: 0 0 8px; color: #374151;"><strong>Name:</strong> ${customerName}</p>` : ''}
+                            ${customerPhone ? `<p style="margin: 0; color: #374151;"><strong>Phone:</strong> ${customerPhone}</p>` : ''}
+                          </td>
+                        </tr>
+                      </table>
+                      ` : ''}
+
+                      ${managerName || managerContact ? `
+                      <!-- Manager Info -->
+                      <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 20px; background-color: #eff6ff; border-radius: 12px;">
+                        <tr>
+                          <td style="padding: 20px;">
+                            <p style="margin: 0 0 10px; color: #1e40af; font-weight: 600; font-size: 14px;">Your Loan Manager</p>
+                            ${managerName ? `<p style="margin: 0 0 5px; color: #1e3a8a;"><strong>${managerName}</strong></p>` : ''}
+                            ${managerContact ? `<p style="margin: 0; color: #3b82f6;">${managerContact}</p>` : ''}
+                          </td>
+                        </tr>
+                      </table>
+                      ` : ''}
+
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                      <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px;">Thank you for choosing GME Finance</p>
+                      <p style="margin: 0; color: #9ca3af; font-size: 12px;">&copy; 2025 GME Finance. All rights reserved.</p>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
         </html>
       `,
