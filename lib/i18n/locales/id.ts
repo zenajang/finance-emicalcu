@@ -7,6 +7,7 @@ export const id = {
   visaExpiry: "Tanggal Kedaluwarsa Visa",
   loanDuration: "Durasi Pinjaman",
   selectLoanDuration: "Pilih durasi pinjaman",
+  emiRange: "Kisaran EMI",
   months: "bulan",
   year: "tahun",
   years: "tahun",

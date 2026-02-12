@@ -7,6 +7,7 @@ export const ne = {
   visaExpiry: "भिसा म्याद सकिने मिति",
   loanDuration: "ऋण अवधि",
   selectLoanDuration: "ऋण अवधि चयन गर्नुहोस्",
+  emiRange: "EMI दायरा",
   months: "महिना",
   year: "वर्ष",
   years: "वर्ष",

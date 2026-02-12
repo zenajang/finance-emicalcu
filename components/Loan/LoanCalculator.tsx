@@ -657,6 +657,22 @@ export default function LoanCalculator() {
                 </div>
               </div>
 
+              {/* EMI 범위 */}
+              {selectedLoanAmount && (() => {
+                const durations = getAvailableDurationsForAmount()
+                if (durations.length === 0) return null
+                const minEmi = Math.min(...durations.map(d => d.emi))
+                const maxEmi = Math.max(...durations.map(d => d.emi))
+                return (
+                  <div className="border border-gray-200 rounded-xl p-4 flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-600">{t("emiRange")}</span>
+                    <span className="text-sm font-semibold text-gray-900">
+                      {formatCurrency(minEmi)}{t("won")} ~ {formatCurrency(maxEmi)}{t("won")}
+                    </span>
+                  </div>
+                )
+              })()}
+
               {/* Customer Information */}
               <div className="bg-gray-50 rounded-xl p-5 space-y-4">
                 <Label className="text-sm font-semibold text-gray-700">{t("customerInfo")}</Label>

@@ -7,6 +7,7 @@ export const zh = {
   visaExpiry: "签证到期日期",
   loanDuration: "贷款期限",
   selectLoanDuration: "选择贷款期限",
+  emiRange: "EMI范围",
   months: "个月",
   year: "年",
   years: "年",

@@ -7,6 +7,7 @@ export const vi = {
   visaExpiry: "Ngày Hết Hạn Visa",
   loanDuration: "Thời Gian Vay",
   selectLoanDuration: "Chọn thời gian vay",
+  emiRange: "Phạm vi EMI",
   months: "tháng",
   year: "năm",
   years: "năm",

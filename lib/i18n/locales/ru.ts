@@ -7,6 +7,7 @@ export const ru = {
   visaExpiry: "Дата Истечения Визы",
   loanDuration: "Срок Кредита",
   selectLoanDuration: "Выберите срок кредита",
+  emiRange: "Диапазон EMI",
   months: "месяцев",
   year: "год",
   years: "лет",

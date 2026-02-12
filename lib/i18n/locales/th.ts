@@ -7,6 +7,7 @@ export const th = {
   visaExpiry: "วันหมดอายุวีซ่า",
   loanDuration: "ระยะเวลาเงินกู้",
   selectLoanDuration: "เลือกระยะเวลาเงินกู้",
+  emiRange: "ช่วง EMI",
   months: "เดือน",
   year: "ปี",
   years: "ปี",

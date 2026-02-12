@@ -6,6 +6,7 @@ export const ko = {
   visaExpiry: "비자 만료일",
   loanDuration: "신청 대출 기간",
   selectLoanDuration: "대출 기간을 선택하세요",
+  emiRange: "월 상환액 범위",
   months: "개월",
   year: "년",
   years: "년",

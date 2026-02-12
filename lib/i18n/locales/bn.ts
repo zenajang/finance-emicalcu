@@ -7,6 +7,7 @@ export const bn = {
   visaExpiry: "ভিসা মেয়াদ শেষের তারিখ",
   loanDuration: "ঋণের সময়কাল",
   selectLoanDuration: "ঋণের সময়কাল নির্বাচন করুন",
+  emiRange: "EMI পরিসীমা",
   months: "মাস",
   year: "বছর",
   years: "বছর",

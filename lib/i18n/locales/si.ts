@@ -7,6 +7,7 @@ export const si = {
   visaExpiry: "වීසා කල් ඉකුත් වන දිනය",
   loanDuration: "ණය කාලසීමාව",
   selectLoanDuration: "ණය කාලසීමාව තෝරන්න",
+  emiRange: "EMI පරාසය",
   months: "මාස",
   year: "වසර",
   years: "වසර",

@@ -7,6 +7,7 @@ export const mn = {
   visaExpiry: "Визний Дуусах Огноо",
   loanDuration: "Зээлийн Хугацаа",
   selectLoanDuration: "Зээлийн хугацааг сонгоно уу",
+  emiRange: "EMI хүрээ",
   months: "сар",
   year: "жил",
   years: "жил",

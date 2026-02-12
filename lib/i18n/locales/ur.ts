@@ -7,6 +7,7 @@ export const ur = {
   visaExpiry: "ویزا کی میعاد ختم ہونے کی تاریخ",
   loanDuration: "قرض کی مدت",
   selectLoanDuration: "قرض کی مدت منتخب کریں",
+  emiRange: "EMI کی حد",
   months: "مہینے",
   year: "سال",
   years: "سال",

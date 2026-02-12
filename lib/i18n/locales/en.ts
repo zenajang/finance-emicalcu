@@ -6,6 +6,7 @@ export const en = {
   visaExpiry: "Visa Expiry Date",
   loanDuration: "Loan Duration",
   selectLoanDuration: "Select loan duration",
+  emiRange: "EMI Range",
   months: "months",
   year: "year",
   years: "years",

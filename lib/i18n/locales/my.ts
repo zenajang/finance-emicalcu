@@ -7,6 +7,7 @@ export const my = {
   visaExpiry: "ဗီဇာသက်တမ်းကုန်ဆုံးရက်",
   loanDuration: "ချေးငွေကာလ",
   selectLoanDuration: "ချေးငွေကာလကို ရွေးပါ",
+  emiRange: "EMI အပိုင်းအခြား",
   months: "လ",
   year: "နှစ်",
   years: "နှစ်",

@@ -7,6 +7,7 @@ export const uz = {
   visaExpiry: "Viza Amal Qilish Muddati",
   loanDuration: "Kredit Muddati",
   selectLoanDuration: "Kredit muddatini tanlang",
+  emiRange: "EMI diapazoni",
   months: "oy",
   year: "yil",
   years: "yil",

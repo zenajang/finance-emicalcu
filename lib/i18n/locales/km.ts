@@ -7,6 +7,7 @@ export const km = {
   visaExpiry: "កាលបរិច្ឆេទផុតកំណត់ទិដ្ឋាការ",
   loanDuration: "រយៈពេលប្រាក់កម្ចី",
   selectLoanDuration: "ជ្រើសរើសរយៈពេលប្រាក់កម្ចី",
+  emiRange: "ជួរ EMI",
   months: "ខែ",
   year: "ឆ្នាំ",
   years: "ឆ្នាំ",
